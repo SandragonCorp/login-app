@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    position: relative;
+    box-sizing: border-box;
+    color: black !important;
+}
+
+body {
+    padding: 60px 15px 15px 15px;
+    overflow-y: hidden;
+}
+
+.page_wrapper .page_title {
+    text-align: center;
+}
+
+@import url(components/Input/TextField.css);
+@import url(components/Input/Button.css);

@@ -1,4 +1,5 @@
 import './globals.css'
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Navbar } from './components/_navbar'
@@ -14,9 +15,10 @@ export default function RootLayout({ children }: {
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-slate-800 text-slate-100 container mx-auto p-4`}>
-      <Navbar />
-        {children}</body>
+      <body className={`${inter.className} _navbar bg-slate-800 text-slate-100 container mx-auto`}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   )
 }
