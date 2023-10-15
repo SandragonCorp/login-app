@@ -1,0 +1,46 @@
+
+
+/**
+* Forms
+*/
+
+/**
+* Labels
+*/
+label {
+    color: black;
+    display: inline-block;
+    width: 100%;
+}
+
+/**
+* TextField
+*/
+
+input {
+    border: 1px solid gray;
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+}
+
+/**
+* Button
+*/
+
+button,
+input[type="submit"] {
+    width: auto;
+    height: 40px;
+    padding: 0px 10px;
+    display: block;
+    cursor: pointer;
+    border: none;
+}
+
+/**
+* Anchor
+*/
+a {
+    color: black;
+}
