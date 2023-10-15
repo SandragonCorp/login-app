@@ -1,0 +1,12 @@
+.btn {
+    border: 1px solid black;
+    width: auto;
+    height: 40px;
+    padding: 0px 10px;
+    color: black;
+    border-radius: 7px;
+}
+
+.btn.primary {
+    background-color: aqua;
+}
