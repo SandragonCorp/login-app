@@ -1,0 +1,29 @@
+.page_wrapper {
+    background-color: white;
+    max-width: 500px;
+    margin-top: 50px;
+    padding: 30px 20px 50px 20px;
+    border: 1px solid lightgrey;
+    color: black;
+}
+
+.header_image {
+    margin-bottom: 20px;
+}
+
+.page_title {
+    color: black;
+    margin-bottom: 70px;
+}
+
+.page_wrapper label {
+    margin-bottom: 1rem;
+}
+
+.submit_button {
+    margin-bottom: 10px;
+}
+
+.register_button {
+    color: rgb(59 130 246 / var(--tw-bg-opacity))
+}

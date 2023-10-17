@@ -22,7 +22,7 @@ async function createUser(data: FormData) {
     if (typeof email !== "string" || email.length <= 0) throw new Error("Invalid Email")
     if (typeof userName !== "string" || userName.length <= 0) throw new Error("Invalid UserName")
     if (typeof password !== "string" || password.length <= 0) throw new Error("Invalid Password")
-    
+
     await prisma.user.create({
         data: {
             firstName, lastName, email, userName, password, isActive: true
@@ -45,7 +45,7 @@ export default function Register() {
                     <label>Password: <input type='password' name='password' className='rounded-sm' placeholder='Password'/> </label>
                     <label>Confirm Password: <input type='password' name='confirm_password' className='rounded-sm' placeholder='Confirm Password' /> </label>
                     <input type='submit' className='mx-auto mb-16 bg-blue-500 hover:bg-blue-400 text-white font-bold' value='Submit' />
-                    Already have an account? <Link href="/" className={`italic text-blue hover:underline underline-offset-4 ${style.login_button}`}>Login Here</Link>
+                    Already have an account? <Link href="/user/login" className={`italic text-blue hover:underline underline-offset-4 ${style.login_button}`}>Login Here</Link>
                 </form>
             </div>
         </>
