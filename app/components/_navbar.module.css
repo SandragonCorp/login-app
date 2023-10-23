@@ -1,4 +1,11 @@
-._navbar {
-    height: 60;
-    width: 100%;
+.navbar_options_ul li a {
+    line-height: 40px; /*to match the "Sign In" button height and make all links aligned */
+}
+
+.navbar_options_ul li a:first-child {
+    margin-left: 0px;
+}
+
+.navbar_options_ul li a:last-child {
+    margin-right: 0px;
 }

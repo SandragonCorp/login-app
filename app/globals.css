@@ -16,3 +16,7 @@ body {
 .page_wrapper .page_title {
     text-align: center;
 }
+
+.hidden {
+    display: none;
+}
