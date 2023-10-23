@@ -8,7 +8,6 @@
 * Labels
 */
 label {
-    color: black;
     display: inline-block;
     width: 100%;
 }
@@ -42,13 +41,5 @@ input[type="submit"] {
 * Anchor
 */
 a {
-    color: black;
-}
-
-/**
-* List
-*/
-
-ul {
-    color: black;
+    cursor: pointer;
 }
