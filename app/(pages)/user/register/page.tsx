@@ -1,18 +1,20 @@
 
 "use client"
+
 import Image from 'next/image'
-import Link from 'next/link'
 
 import style from './register.module.css'
 
 import registerHeaderLogoPath from '@/public/images/register-logo.png'
-import { prisma } from '@/app/db'
-import { redirect } from 'next/navigation'
 import { SyntheticEvent, useState } from 'react'
 import axios from 'axios'
 import { signIn } from 'next-auth/react'
+import { TOAST_POSITION } from '@/app/(globals)/global'
+import { EVENTS } from '@/app/scripts/events'
+import { ToastProps } from '@/app/components/toasts/_toast'
 
 export default function Register() {
+
     const [registerForm, setRegisterForm] = useState<RegisterForm>({
         firstName: '',
         lastName: '',
@@ -24,8 +26,6 @@ export default function Register() {
 
     const onRegister = (e: SyntheticEvent) => {
         e.preventDefault();
-
-        console.log(registerForm);
 
         axios
             .post(
@@ -39,10 +39,31 @@ export default function Register() {
         );
     };
 
+    const onClickTestTM = (e: SyntheticEvent) => {
+        e.preventDefault();
+
+        EVENTS.triggerGlobalEvent('addToastToGroup' + TOAST_POSITION.TOP_MIDDLE, {message: "TM " + Date.now(), hasClose: true} as ToastProps);
+    };
+
+    const onClickTestTR = (e: SyntheticEvent) => {
+        e.preventDefault();
+
+        EVENTS.triggerGlobalEvent('addToastToGroup' + TOAST_POSITION.TOP_RIGHT, {message: "TR " + Date.now(), hasClose: true} as ToastProps);
+    };
+
+    const onClickTestBR = (e: SyntheticEvent) => {
+        e.preventDefault();
+
+        EVENTS.triggerGlobalEvent('addToastToGroup' + TOAST_POSITION.BOTTOM_RIGHT, {message: "BR " + Date.now(), hasClose: true} as ToastProps);
+    };
+
     return (
         <>
             <div className="page_register">
                 <form className={`page_wrapper rounded-sm mx-auto text-center ${style.page_wrapper}`} onSubmit={onRegister}>
+                    <button onClick={onClickTestTM}>Add Toast Top Middle</button>
+                    <button onClick={onClickTestTR}>Add Toast Top Right</button>
+                    <button onClick={onClickTestBR}>Add Toast Bottom Right</button>
                     <Image src={registerHeaderLogoPath} className={`mx-auto ${style.header_image}`} alt='' />
                     <h2 className={`page_title font-serif text-5xl ${style.page_title}`}>Registration</h2>
                     <label className='text-left'>
@@ -52,6 +73,7 @@ export default function Register() {
                             name='firstname'
                             className='rounded-sm'
                             placeholder='Firstname'
+                            required
                             onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  firstName: (e.target as HTMLInputElement).value})}
                         />
                     </label>

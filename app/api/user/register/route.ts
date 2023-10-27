@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { generateGenericResponse, STATUS_CODE_NOT_FOUND, STATUS_CODE_OK } from '@/app/(utils)/_http'
 import { prisma } from '@/app/db'
-import { ROLES } from '@/app/(model)/_user';
+import { ROLES } from '@/app/(models)/_user';
 import bcryptjs from "bcryptjs";
 
 export async function POST(request: NextRequest) {
