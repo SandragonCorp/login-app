@@ -1,5 +1,5 @@
 
-import { ResponseGeneric } from '@/app/(model)/_response_generic'
+import { ResponseGeneric } from '@/app/(models)/_response_generic'
 import { NextResponse } from 'next/server'
 
 /**

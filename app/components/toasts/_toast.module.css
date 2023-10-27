@@ -1,0 +1,18 @@
+.toast {
+    width: auto;
+    display: block;
+    height: 30;
+}
+
+/* .toastWrapperTable tbody tr td:nth-child(2){
+    background-color: red;
+    width: 20px;
+} */
+
+.toastCloseButton {
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.toastCloseButton:hover {
+    background-color: rgba(0, 0, 0, .1);
+}

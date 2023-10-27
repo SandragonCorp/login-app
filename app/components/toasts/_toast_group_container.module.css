@@ -1,0 +1,12 @@
+.top {
+    top: 82px; /* navbar height it 72px*/
+}
+
+.right {
+    right: 10px;
+    max-width: 240px;
+}
+
+.bottom {
+    bottom: 10px;
+}
