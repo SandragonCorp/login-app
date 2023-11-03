@@ -49,7 +49,7 @@ export default function Register() {
             url: '/api/user/register',
             data: registerForm,
             beforeRequest: () => {
-                clearToastsByGroup({ position: TOAST_POSITION.TOP_MIDDLE } as ClearToastsProps);
+                clearToastsByGroup(TOAST_POSITION.TOP_MIDDLE);
                 setDisabledForm(true);
             },
             successCallback: (response: any) => {

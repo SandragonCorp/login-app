@@ -74,14 +74,10 @@ export interface NewToastProps {
     toastProp: ToastProps
 }
 
-export interface ClearToastsProps {
-    position: TOAST_POSITION
-}
-
 export const addToast = (config: NewToastProps) => {
     EVENTS.triggerGlobalEvent('addToastToGroup' + config.position, config.toastProp);
 }
 
-export const clearToastsByGroup = (config: ClearToastsProps) => {
-    EVENTS.triggerGlobalEvent('clearToastsByGroup' + config.position);
+export const clearToastsByGroup = (position: TOAST_POSITION) => {
+    EVENTS.triggerGlobalEvent('clearToastsByGroup' + position);
 }
