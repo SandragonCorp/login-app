@@ -2,19 +2,23 @@
 "use client"
 
 import Image from 'next/image'
-
 import style from './register.module.css'
 
 import registerHeaderLogoPath from '@/public/images/register-logo.png'
-import { SyntheticEvent, useState } from 'react'
-import axios from 'axios'
+import { SyntheticEvent, createRef, useRef, useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { TOAST_POSITION } from '@/app/(globals)/global'
-import { EVENTS } from '@/app/scripts/events'
-import { ToastProps } from '@/app/components/toasts/_toast'
+import { ClearToastsProps, NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast'
+import { AJAX, forceRedirectTo, redirectTo } from '@/app/(utils)/_http'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo'
+import { sleep } from '@/app/(utils)/_delay'
+import Tooltip, { TOOLTIP_POSITION, TooltipTrigger, TooltipWrapper } from '@/app/components/tooltip'
 
 export default function Register() {
 
+    // storage of each input values to be passed to the request
     const [registerForm, setRegisterForm] = useState<RegisterForm>({
         firstName: '',
         lastName: '',
@@ -24,46 +28,86 @@ export default function Register() {
         confirmPassword: ''
     });
 
+    // each of form inputs styles if value is invalid after register request
+    const defaultInputStyles = {
+        firstname: '',
+        lastname: '',
+        email: '',
+        username: '',
+        password: '',
+        confirm_password: ''
+    }
+    const [inputStyles, setInputStyles] = useState(defaultInputStyles);
+
+    // disabling the form while loading
+    const [isDisabledForm, setDisabledForm] = useState(false);
     const onRegister = (e: SyntheticEvent) => {
         e.preventDefault();
 
-        axios
-            .post(
-                '/api/user/register',
-                registerForm
-            )
-            .then((response) => {
-                // @todo show message and add the login link
-                console.log(response);
+        // @todo show toasts
+        AJAX.post({
+            url: '/api/user/register',
+            data: registerForm,
+            beforeRequest: () => {
+                clearToastsByGroup({ position: TOAST_POSITION.TOP_MIDDLE } as ClearToastsProps);
+                setDisabledForm(true);
+            },
+            successCallback: (response: any) => {
+                setInputStyles(defaultInputStyles);
+
+                const message = response.data.message + '<br/><br/> Or click <a class="underline underline-offset-2" href="/user/login">here</a> to redirect manually.';
+                addToast({
+                    position: TOAST_POSITION.TOP_MIDDLE,
+                    toastProp: {message: message, hasClose: true, style: TOAST_STYLES.SUCCESS} as ToastProps
+                } as NewToastProps);
+
+                sleep(5000, () => {
+                   forceRedirectTo('/user/login'); 
+                });
+            },
+            errorCallback: (response: any) => {
+                setDisabledForm(false);
+                const responseData = response.data;
+
+                // highlight input with invalid input
+                setInputStyles({
+                    ...defaultInputStyles,
+                    [responseData.metadata.formName]: 'border-red-600 hover:border-red-600 border-2'
+                });
+
+                // show toast
+                addToast({
+                    position: TOAST_POSITION.TOP_MIDDLE,
+                    toastProp: {message: responseData.message, hasClose: true, style: TOAST_STYLES.ERROR} as ToastProps
+                } as NewToastProps);
             }
-        );
+        });
     };
 
-    const onClickTestTM = (e: SyntheticEvent) => {
-        e.preventDefault();
+    // "Show password" feature for password and confirm password inputs
+    const [isShowPasswords, setIsShowPasswords] = useState({
+        password: false as boolean,
+        confirm_password: false as boolean
+    } as any);
+    const toggleShowPassword = (formName: string) => {
+        setIsShowPasswords({
+            ...isShowPasswords,
+            [formName] : !isShowPasswords[formName] as boolean
+        });
+    }
 
-        EVENTS.triggerGlobalEvent('addToastToGroup' + TOAST_POSITION.TOP_MIDDLE, {message: "TM " + Date.now(), hasClose: true} as ToastProps);
-    };
+    // username hint tooltip
+    const usernameTooltipRef = useRef();
+    const [isShowUsernameTooltip, setIsShowUsernameTooltip] = useState(false);
 
-    const onClickTestTR = (e: SyntheticEvent) => {
-        e.preventDefault();
-
-        EVENTS.triggerGlobalEvent('addToastToGroup' + TOAST_POSITION.TOP_RIGHT, {message: "TR " + Date.now(), hasClose: true} as ToastProps);
-    };
-
-    const onClickTestBR = (e: SyntheticEvent) => {
-        e.preventDefault();
-
-        EVENTS.triggerGlobalEvent('addToastToGroup' + TOAST_POSITION.BOTTOM_RIGHT, {message: "BR " + Date.now(), hasClose: true} as ToastProps);
-    };
+    // password hint tooltip
+    const [isShowPasswordTooltip, setIsShowPasswordTooltip] = useState(false);
 
     return (
+        // @todo show valid password in a hint
         <>
             <div className="page_register">
-                <form className={`page_wrapper rounded-sm mx-auto text-center ${style.page_wrapper}`} onSubmit={onRegister}>
-                    <button onClick={onClickTestTM}>Add Toast Top Middle</button>
-                    <button onClick={onClickTestTR}>Add Toast Top Right</button>
-                    <button onClick={onClickTestBR}>Add Toast Bottom Right</button>
+                <form className={`page_wrapper rounded-sm mx-auto text-center ${style.page_wrapper} ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onRegister}>
                     <Image src={registerHeaderLogoPath} className={`mx-auto ${style.header_image}`} alt='' />
                     <h2 className={`page_title font-serif text-5xl ${style.page_title}`}>Registration</h2>
                     <label className='text-left'>
@@ -71,7 +115,7 @@ export default function Register() {
                         <input
                             type='text'
                             name='firstname'
-                            className='rounded-sm'
+                            className={`rounded-sm ${inputStyles.firstname}`}
                             placeholder='Firstname'
                             required
                             onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  firstName: (e.target as HTMLInputElement).value})}
@@ -82,9 +126,32 @@ export default function Register() {
                         <input
                             type='text'
                             name='lastname'
-                            className='rounded-sm'
+                            className={`rounded-sm ${inputStyles.lastname}`}
                             placeholder='Lastname'
+                            required
                             onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  lastName: (e.target as HTMLInputElement).value})}
+                        />
+                    </label>
+                    <label className='text-left'>
+                        Username:&nbsp;
+                        <TooltipWrapper className='inline-block'>
+                            <TooltipTrigger>
+                                <FontAwesomeIcon
+                                    className='cursor-help'
+                                    icon={faCircleInfo} size="lg" style={{color: "#1f2937"}}
+                                />
+                            </TooltipTrigger>
+                            <Tooltip position={TOOLTIP_POSITION.TOP_MIDDLE} >
+                                Username can only have letters, numbers, dots(.), or underscores(_)
+                            </Tooltip>
+                        </TooltipWrapper>
+                        <input
+                            type='text'
+                            name='username'
+                            className={`rounded-sm ${inputStyles.username}`}
+                            placeholder='Username'
+                            required
+                            onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  username: (e.target as HTMLInputElement).value})}
                         />
                     </label>
                     <label className='text-left'>
@@ -92,40 +159,65 @@ export default function Register() {
                         <input
                             type='email'
                             name='email'
-                            className='rounded-sm'
+                            className={`rounded-sm ${inputStyles.email}`}
                             placeholder='Email'
+                            required
                             onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  email: (e.target as HTMLInputElement).value})}
                         />
                     </label>
                     <label className='text-left'>
-                        Username:
-                        <input
-                            type='text'
-                            name='username'
-                            className='rounded-sm'
-                            placeholder='Username'
-                            onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  username: (e.target as HTMLInputElement).value})}
-                        />
-                    </label>
-                    <label className='text-left'>
-                        Password:
-                        <input
-                            type='password'
-                            name='password'
-                            className='rounded-sm'
-                            placeholder='Password'
-                            onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  password: (e.target as HTMLInputElement).value})}
-                        />
+                        Password:&nbsp;
+                        
+                        <TooltipWrapper className='inline-block'>
+                            <TooltipTrigger>
+                            <FontAwesomeIcon
+                                className='cursor-help'
+                                icon={faCircleInfo} size="lg" style={{color: "#1f2937"}}
+                            />
+                            </TooltipTrigger>
+                            <Tooltip position={TOOLTIP_POSITION.TOP_MIDDLE} >
+                            Password must have: <br/>
+                                At least one uppercase letter.<br/>
+                                At least one special case letter (!@#$&*).<br/>
+                                At least has two digits.<br/>
+                                At least three lowercase letters.<br/>
+                                At least 8 characters.
+                            </Tooltip>
+                        </TooltipWrapper>
+                        <div>
+                            <input
+                                type={`${isShowPasswords['password'] ? 'text' : 'password'}`}
+                                name='password'
+                                className={`rounded-sm ${inputStyles.password}`}
+                                placeholder='Password'
+                                required
+                                onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  password: (e.target as HTMLInputElement).value})}
+                            />
+                            <FontAwesomeIcon
+                                className={`absolute top-0 bottom-0 my-auto cursor-pointer ${isShowPasswords['password'] ? 'right-2' : 'right-2.5'}`}
+                                icon={ isShowPasswords['password'] ? faEyeSlash : faEye } size='lg' style={{color: "#1f2937"}} 
+                                onClick={() => toggleShowPassword('password')}
+                            />
+                        </div>
                     </label>
                     <label className='text-left'>
                         Confirm Password:
-                        <input
-                            type='password'
-                            name='confirm_password'
-                            className='rounded-sm'
-                            placeholder='Confirm Password'
-                            onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  confirmPassword: (e.target as HTMLInputElement).value})}
-                        />
+                        <div>
+                            <input
+                                type={`${isShowPasswords['confirm_password'] ? 'text' : 'password'}`}
+                                name='confirm_password'
+                                className={`rounded-sm ${inputStyles.confirm_password}`}
+                                placeholder='Confirm Password'
+                                required
+                                onChange={(e: SyntheticEvent) => setRegisterForm({...registerForm,  confirmPassword: (e.target as HTMLInputElement).value})}
+                            />
+                            <FontAwesomeIcon
+                                className={`absolute top-0 bottom-0 my-auto cursor-pointer ${isShowPasswords['confirm_password'] ? 'right-2' : 'right-2.5'}`}
+                                icon={ isShowPasswords['confirm_password'] ? faEyeSlash : faEye } size='lg' style={{color: "#1f2937"}} 
+                                onClick={() => toggleShowPassword('confirm_password')}
+                            />
+                        </div>
+                        
                     </label>
 
                     <input type='submit' className='mx-auto mb-16 bg-blue-500 hover:bg-blue-400 text-white font-bold' value='Submit' />

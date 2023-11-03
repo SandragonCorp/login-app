@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Users` MODIFY `enabled` TINYINT NULL DEFAULT 0;

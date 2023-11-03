@@ -2,11 +2,11 @@
 CREATE TABLE `Users` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(45) NULL,
-    `password` VARCHAR(45) NULL,
+    `password` VARCHAR(255) NULL,
     `email` VARCHAR(45) NULL,
     `firstname` VARCHAR(45) NULL,
     `lastname` VARCHAR(45) NULL,
-    `enabled` TINYINT NULL,
+    `enabled` TINYINT NULL DEFAULT 0,
     `roles` VARCHAR(255) NULL,
     `createddatetime` DATETIME(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
     `lastloggedindatetime` DATETIME(0) NULL DEFAULT CURRENT_TIMESTAMP(0),

@@ -17,6 +17,10 @@ input {
     padding: 10px;
 }
 
+input:focus-visible {
+    outline: none;
+}
+
 /**
 * Button
 */
