@@ -5,15 +5,17 @@ import style from './login.module.css'
 import registerHeaderLogoPath from '@/public/images/register-logo.png'
 import Link from 'next/link'
 import { SyntheticEvent, useState, useEffect } from 'react'
-import { useRouter, useSearchParams, redirect  } from 'next/navigation'
+import { useSearchParams, redirect  } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
-import { redirectTo } from '@/app/(utils)/_http';
+import { STATUS_CODES, forceRedirectTo } from "@/app/(utils)/_http";
+import { NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast';
 
 export default function Login() {
     // for some reason, this is called everytime. I don't know why. maybe is and side-effect thing or next auth thing? (Note that this page is a custom login page of next auth)
 
+    // disabling the form while loading
+    const [isDisabledForm, setDisabledForm] = useState(false);
     const [loginForm, setLoginForm] = useState<LoginForm>({username: '', password: ''});
-    const router = useRouter();
     const searchParams = useSearchParams();
     const { data: session, status } = useSession();
 
@@ -27,21 +29,36 @@ export default function Login() {
     const onLoginSubmit = async (e: SyntheticEvent ) => {
         e.preventDefault();
 
+        clearToastsByGroup(TOAST_POSITION.TOP_MIDDLE);
+        setDisabledForm(true);
+
         const loginResponse =  await signIn("credentials", {
             username: loginForm.username,
             password: loginForm.password,
-            redirect: false,
+            redirect: false
         });
 
-        // @todo implement different error messages. 
-        // and redirect to profile
-        console.log(loginResponse);
+        if (loginResponse?.status === STATUS_CODES.OK) {
+            forceRedirectTo('/');
+        } else if (loginResponse?.status === STATUS_CODES.UNAUTHORIZED) {
+            // if unauthorized we always show same error message
+            addToast({
+                position: TOAST_POSITION.TOP_MIDDLE,
+                toastProp: {message: 'Invalid username/password', hasClose: true, style: TOAST_STYLES.ERROR} as ToastProps
+            } as NewToastProps);
+        } else {
+            addToast({
+                position: TOAST_POSITION.TOP_MIDDLE,
+                toastProp: {message: 'There is a problem logging in.', hasClose: true, style: TOAST_STYLES.ERROR} as ToastProps
+            } as NewToastProps);
+        }
+        setDisabledForm(false);
     };
 
     return (
         <>
             <div className='page_register'>
-                <form className={`page_wrapper rounded-sm mx-auto text-center ${style.page_wrapper}`} onSubmit={onLoginSubmit}>
+                <form className={`page_wrapper rounded-sm mx-auto text-center ${style.page_wrapper} ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onLoginSubmit}>
                     <Image src={registerHeaderLogoPath} className={`mx-auto ${style.header_image}`} alt='' />
                     <h2 className={`page_title font-serif text-5xl ${style.page_title}`}>Login</h2>
                     <label className='text-left'>
@@ -66,6 +83,7 @@ export default function Login() {
                         type='submit'
                         className='mx-auto mb-16 bg-blue-500 hover:bg-blue-400 text-white font-bold'
                         value='Submit' />
+
                     Don't have an account?
                     <Link
                         href='/user/register'
@@ -73,7 +91,7 @@ export default function Login() {
                             Sign up
                     </Link>
                 </form>
-            </div>`
+            </div>
         </>
     )
 }

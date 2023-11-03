@@ -13,7 +13,7 @@ export default function Profile() {
 
     return (
         <>
-            <div>Profile</div>
+            <h1 className='p-12'>Profile</h1>
             <input
                 type='submit'
                 className='mx-auto mb-16 bg-blue-500 hover:bg-blue-400 text-white font-bold'

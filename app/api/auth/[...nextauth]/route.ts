@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from '@prisma/client';
 import bcryptjs from "bcryptjs";
@@ -13,7 +13,10 @@ export const authOptions = {
         CredentialsProvider({
             type: "credentials",
             name: "Simple Login",
-            credentials: { },
+            credentials: { 
+                username: { },
+                password: { }
+            },
             async authorize(credentials) {
                 const prisma = new PrismaClient();
 
@@ -25,10 +28,9 @@ export const authOptions = {
                         ]
                     }
                 });
-
         
                 //check if password is correct
-                const isPasswordValid = await bcryptjs.compare(credentials?.password, user.password)
+                const isPasswordValid = await bcryptjs.compare(credentials?.password as string, user.password as string)
                 if(!isPasswordValid){
                     return null;
                 }

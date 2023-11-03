@@ -29,9 +29,6 @@ export function Navbar() {
                             <li className="m-4 text-xl text-white text-cente hover:bg-slate-900 border-slate-900 md:hover:bg-transparent">
                                 <Link href="/about" className='md:hover:text-slate-600'>About</Link>
                             </li>
-                            <li className="m-4 text-xl text-white text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
-                                <Link href="/projects" className='md:hover:text-slate-600'>Projects</Link>
-                            </li>
                             <li className="m-4 text-xl text-white  text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
                                 <Link href="/contact" className='md:hover:text-slate-600'>Contact</Link>
                             </li>
