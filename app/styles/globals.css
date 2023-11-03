@@ -26,3 +26,29 @@ body {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+form.disabled::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    z-index: 99;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    border-top-color: grey;
+    animation: spinner .6s linear infinite;
+}
+
+form.disabled::after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .2);
+}

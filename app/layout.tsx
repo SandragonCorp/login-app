@@ -1,15 +1,21 @@
 // custom css
-import './globals.css'
-import '@/app/styles/dom.css'
+import './styles/globals.css'
+import './styles/keyframes.css'
+import './styles/dom.css'
+
+// these next lines prevents the font awesome to load super big first then shrinks to the correct size
+// basicallly prevents the css to load at the server-side 
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false; /* eslint-disable import/first */
 
 // react related imports
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Navbar } from './components/_navbar'
 import NextAuthSessionProvider from './api/auth/[...nextauth]/_session_provider'
-import ToastContainer from './components/toasts/_toast_group_container'
 import { AppContext } from './(contexts)/app_context'
-import { TOAST_POSITION } from './(globals)/global'
 import { ToastMainContainer } from './components/toasts/_toast_main_container'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -35,7 +41,7 @@ export default function RootLayout({ children }: Props) {
             <Navbar />
 
             {/* CHILDREN */}
-            {children}
+            { children }
           </AppContext>
         </NextAuthSessionProvider>
       </body>

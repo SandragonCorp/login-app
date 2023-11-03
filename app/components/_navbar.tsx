@@ -5,7 +5,7 @@ import Link from 'next/link'
 import style from '@/app/components/_navbar.module.css';
 import UserMenu from '@/app/components/_user_menu';
 
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 
 export function Navbar() {
     const {data: session, status} = useSession();
@@ -35,18 +35,20 @@ export function Navbar() {
                             <li className="m-4 text-xl text-white  text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
                                 <Link href="/contact" className='md:hover:text-slate-600'>Contact</Link>
                             </li>
-                            <li className="m-4 text-xl text-white text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
-                                <Link href="/user" className='md:hover:text-slate-600'>Users</Link>
-                            </li>
                             {
                                 session ? (
                                     <li className="m-4 text-xl text-white text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
                                         <UserMenu />
                                     </li>
                                 ) : (
+                                    <>
                                     <li className="m-4 text-xl text-white text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
-                                        <Link href="/user/register"><button className='bg-sky-600 rounded md:hover:text-slate-600'>Sign Up</button> </Link>
+                                        <a className='p-2 bg-sky-600 rounded md:hover:text-slate-600' onClick={() => {signIn()}}>Sign In</a>
                                     </li>
+                                    <li className="m-4 text-xl text-white text-center hover:bg-slate-600 border-slate-900 md:hover:bg-transparent">
+                                        <Link href="/user/register"><button className='bg-sky-600 rounded md:hover:text-slate-600'>Sign Up</button></Link>
+                                    </li>
+                                    </>
                                 )
                             }
                         </ul>

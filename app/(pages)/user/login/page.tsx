@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { SyntheticEvent, useState, useEffect } from 'react'
 import { useRouter, useSearchParams, redirect  } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
+import { redirectTo } from '@/app/(utils)/_http';
 
 export default function Login() {
     // for some reason, this is called everytime. I don't know why. maybe is and side-effect thing or next auth thing? (Note that this page is a custom login page of next auth)
@@ -30,7 +31,6 @@ export default function Login() {
             username: loginForm.username,
             password: loginForm.password,
             redirect: false,
-
         });
 
         // @todo implement different error messages. 

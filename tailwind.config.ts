@@ -8,9 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        
-      },
+      transitionDuration: {
+        '2000': '2000ms' 
+      }
     },
   },
   plugins: [],

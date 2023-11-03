@@ -9,7 +9,7 @@ export const EVENTS = {
         // handler should always be a (event: CustomEvent) => void
         document.removeEventListener(eventName, handler);
     },
-    triggerGlobalEvent: (eventName: string, data: any) => {
+    triggerGlobalEvent: (eventName: string, data?: any) => {
         document.dispatchEvent(new CustomEvent(eventName, {detail: data, bubbles: true}));
     }
 }
