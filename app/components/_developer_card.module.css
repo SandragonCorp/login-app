@@ -1,0 +1,24 @@
+.developerCard {
+    padding: 10px;
+    width: 300px;
+}
+
+.developerName {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    padding-top: 10px;
+}
+
+.developerPosition, .developerQuote {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.developerPosition {
+    font-weight: bold;
+}
+
+.developerQuote {
+    padding-top: 10px;
+    font-style: italic;
+}
