@@ -3,6 +3,9 @@ import './styles/globals.css'
 import './styles/keyframes.css'
 import './styles/dom.css'
 
+// custom js
+import './scripts/interaction_observer'
+
 // these next lines prevents the font awesome to load super big first then shrinks to the correct size
 // basicallly prevents the css to load at the server-side 
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -30,8 +33,8 @@ interface Props {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} _navbar bg-slate-100 text-zinc-950 container mx-auto`}>
+    <html lang="en" className='w-full h-full font-mono'>
+      <body className={`w-full h-full _navbar bg-slate-100 text-slate-800 ${inter.className}`}>
         <NextAuthSessionProvider>
           <AppContext>
             {/* TOASTS */}

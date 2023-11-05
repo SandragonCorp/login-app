@@ -8,13 +8,29 @@
 }
 
 body {
-    padding: 60px 15px 15px 15px;
+    padding: 0;
     overflow-x: hidden;
     min-width: 320px;
+    
+}
+
+.centerByAbsolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    --tw-translate-x: -50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .page_wrapper .page_title {
     text-align: center;
+}
+
+.middle {
+    left: 0px;
+    right: 0px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hidden {
@@ -51,4 +67,61 @@ form.disabled::after {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .2);
+}
+
+/**
+* Fonts
+*/
+.page-title-xl {
+    text-align: center;
+    font-size: 7rem;
+}
+.page-title-lg {
+    text-align: center;
+    font-size: 5rem;
+}
+
+.page-title-brief-description {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+/**
+* Background Images
+*/
+.bg-sunset {
+    background-image: url('/images/sunset.jpg');
+}
+
+
+
+/**
+* Observable - Animations
+*/
+.observable {
+    opacity: 1;
+    transform: translate(0px, 0px);
+    transition-property: transform, opacity;
+    transition-duration: .5s;
+    transition-timing-function: ease-out;
+}
+
+.observable.observable-animate-opacity {
+    transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
+    opacity: 0;
+}
+
+.observable.observable-animate-translateFromLeft {
+    transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
+    transform: translateX(-50px);
+}
+
+.observable.observable-animate-translateFromRight {
+    transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
+    transform: translateX(50px);
+}
+
+.observable.observable-animate-translateFromBottom {
+    transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
+    transform: translateY(50px);
 }
