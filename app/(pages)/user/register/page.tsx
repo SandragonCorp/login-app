@@ -5,9 +5,9 @@ import Image from 'next/image'
 import style from './register.module.css'
 
 import registerHeaderLogoPath from '@/public/images/register-logo.png'
-import { SyntheticEvent, createRef, useRef, useState } from 'react'
+import { SyntheticEvent, useRef, useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
-import { ClearToastsProps, NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast'
+import { NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast'
 import { AJAX, forceRedirectTo, redirectTo } from '@/app/(utils)/_http'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
@@ -15,8 +15,12 @@ import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo'
 import { sleep } from '@/app/(utils)/_delay'
 import Tooltip, { TOOLTIP_POSITION, TooltipTrigger, TooltipWrapper } from '@/app/components/tooltip'
+import { initInteractionObserver } from '@/app/scripts/interaction_observer'
 
 export default function Register() {
+    useEffect(() => {
+        initInteractionObserver();
+    }, []);
 
     // storage of each input values to be passed to the request
     const [registerForm, setRegisterForm] = useState<RegisterForm>({
@@ -44,7 +48,6 @@ export default function Register() {
     const onRegister = (e: SyntheticEvent) => {
         e.preventDefault();
 
-        // @todo show toasts
         AJAX.post({
             url: '/api/user/register',
             data: registerForm,
@@ -106,8 +109,8 @@ export default function Register() {
     return (
         // @todo show valid password in a hint
         <>
-            <div className="page_register">
-                <form className={`page_wrapper rounded-sm mx-auto text-center ${style.page_wrapper} ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onRegister}>
+            <div className="page_wrapper">
+                <form className={`p-8 rounded-md mx-auto text-center max-w-lg bg-white border-2 border-neutral-400 observable observable-animate-opacity ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onRegister}>
                     <Image src={registerHeaderLogoPath} className={`mx-auto ${style.header_image}`} alt='' />
                     <h2 className={`page_title font-serif text-5xl ${style.page_title}`}>Registration</h2>
                     <label className='text-left'>

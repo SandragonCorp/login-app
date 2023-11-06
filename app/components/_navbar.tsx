@@ -10,11 +10,6 @@ import { signIn, useSession } from "next-auth/react"
 export function Navbar() {
     const {data: session, status} = useSession();
 
-    // // @todo design navbar when still loading
-    // if(status === 'loading') {
-    //     return <></>;
-    // }
-
     return (
         <>
             <nav className={`w-full fixed top-0 left-0 right-0 z-10 text-slate-800 text-lg ${style.navbar}`}>
@@ -26,24 +21,24 @@ export function Navbar() {
                     </div>
                     <div className={`md:block md:pb-0 md:mt-0`}>
                         <ul className={`navbar_options_ul md:flex justify-items-center content-center ${style.navbar_options_ul}`} >
-                            <li className="m-4 text-center hover:text-slate-400">
-                                <Link href="/about" className=''>About</Link>
+                            <li className="m-4 text-center">
+                                <Link href="/about" className='hover:text-slate-400'>About</Link>
                             </li>
-                            <li className="m-4 text-center hover:text-slate-400">
-                                <Link href="/contact" className=''>Contact</Link>
+                            <li className="m-4 text-center">
+                                <Link href="/contactus" className='hover:text-slate-400'>Contact</Link>
                             </li>
                             {
                                 session ? (
-                                    <li className="m-4 text-center hover:text-slate-400">
+                                    <li className="m-4 text-center">
                                         <UserMenu />
                                     </li>
                                 ) : (
                                     <>
-                                    <li className="m-4 text-center text-white">
-                                        <a className='p-2 bg-sky-400 hover:bg-sky-300 rounded' onClick={() => {signIn()}}>Sign In</a>
+                                    <li className="m-4 text-center">
+                                        <a className='p-2 bg-sky-400 text-white hover:bg-sky-300 rounded' onClick={() => {signIn()}}>Sign In</a>
                                     </li>
-                                    <li className="m-4 text-center text-white">
-                                        <Link href="/user/register"><button className='bg-sky-400 hover:bg-sky-300 rounded'>Sign Up</button></Link>
+                                    <li className="m-4 text-center">
+                                        <Link href="/contactus" className='p-2 bg-slate-300	hover:bg-slate-200 text-slate-600 rounded'>Sign Up</Link>
                                     </li>
                                     </>
                                 )
