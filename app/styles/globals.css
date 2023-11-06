@@ -11,7 +11,6 @@ body {
     padding: 0;
     overflow-x: hidden;
     min-width: 320px;
-    
 }
 
 .centerByAbsolute {
@@ -22,8 +21,20 @@ body {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.page_wrapper {
+    width: 100vw;
+    padding-top: 72px;
+    color: black;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .page_wrapper .page_title {
     text-align: center;
+}
+
+.page_wrapper label {
+    margin-bottom: 1rem;
 }
 
 .middle {
@@ -101,7 +112,7 @@ form.disabled::after {
 .observable {
     opacity: 1;
     transform: translate(0px, 0px);
-    transition-property: transform, opacity;
+    transition-property: transform, opacity, filter;
     transition-duration: .5s;
     transition-timing-function: ease-out;
 }
@@ -124,4 +135,9 @@ form.disabled::after {
 .observable.observable-animate-translateFromBottom {
     transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
     transform: translateY(50px);
+}
+
+.observable.observable-animate-blur {
+    transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
+    filter: blur(4px);
 }

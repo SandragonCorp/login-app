@@ -33,8 +33,8 @@ interface Props {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" className='w-full h-full font-mono'>
-      <body className={`w-full h-full _navbar bg-slate-100 text-slate-800 ${inter.className}`}>
+    <html lang="en" className='w-full min-h-full font-mono'>
+      <body className={`w-full min-h-full _navbar bg-slate-100 text-slate-800 ${inter.className}`}>
         <NextAuthSessionProvider>
           <AppContext>
             {/* TOASTS */}

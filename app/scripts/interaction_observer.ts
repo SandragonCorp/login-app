@@ -12,6 +12,7 @@ export const initInteractionObserver = () => {
                 entry.target.classList.remove('observable-animate-translateFromLeft');
                 entry.target.classList.remove('observable-animate-translateFromRight');
                 entry.target.classList.remove('observable-animate-translateFromBottom');
+                entry.target.classList.remove('observable-animate-blur');
             } else { // entry is not visible in the viewport 
                 // add observable animation classes so they animate "out"
                 entry.target.getAttribute('data-observable-animate-class-names')?.split(' ').forEach((observableAnimatieClassName) => {

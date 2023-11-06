@@ -9,7 +9,7 @@ interface FullContainerProps {
 export const FullContainer = (config: FullContainerProps) => {
   // pt-[72px] is the height of the navbar 
   return (
-    <section className={`w-full min-h-full pt-[72px] bg-fixed bg-center bg-no-repeat bg-cover ${config.className}`} style={ config.bgImageSrc ? {backgroundImage: `url(${config.bgImageSrc})`} : {} }>
+    <section className={`w-screen min-h-screen pt-[72px] bg-fixed bg-center bg-no-repeat bg-cover ${config.className}`} style={ config.bgImageSrc ? {backgroundImage: `url(${config.bgImageSrc})`} : {} }>
         { config.children }
     </section>
   )
