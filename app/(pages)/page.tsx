@@ -1,7 +1,15 @@
+"use client"
+
+import { FullContainer } from "../components/_full_container";
+
 export default function Home() {
-  return (
-    <>
-      <h1 className="p-12">Home</h1>
-    </>
-  )
+	const userRole = null;
+
+	return (
+	<>
+		<FullContainer className="bg-neutral-200">
+			ROLE: {userRole}
+		</FullContainer>
+	</>
+	)
 }

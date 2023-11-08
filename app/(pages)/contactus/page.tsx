@@ -55,8 +55,6 @@ export default function Page() {
                 setDisabledForm(false);
                 const responseData = response.data;
 
-                console.log(responseData.metadata.formName)
-
                 // highlight input with invalid input
                 setInputStyles({
                     ...defaultInputStyles,
