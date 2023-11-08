@@ -34,6 +34,5 @@ export const Mailer = {
           });
 
         const info = await transporter.sendMail(config);
-        console.log("Message sent: %s", info.messageId);
     }
 }

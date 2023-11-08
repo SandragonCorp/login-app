@@ -2,13 +2,13 @@ import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from '@prisma/client';
 import bcryptjs from "bcryptjs";
+import { DateTime } from "@/app/(utils)/_datetime";
 
 export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
     },
-    // debug: process.env.NODE_ENV === 'development',
     providers: [
         CredentialsProvider({
             type: "credentials",
@@ -17,10 +17,10 @@ export const authOptions = {
                 username: { },
                 password: { }
             },
-            async authorize(credentials) {
+            async authorize(credentials) : Promise<any> {
                 const prisma = new PrismaClient();
 
-                //check if user exists
+                // check if user exists
                 const user = await prisma.users.findFirstOrThrow({
                     where: {
                         OR: [
@@ -34,6 +34,11 @@ export const authOptions = {
                 if(!isPasswordValid){
                     return null;
                 }
+
+                await prisma.users.update({
+                    where: { id: user.id },
+                    data: { lastloggedindatetime: (new DateTime()).toISOString() }
+                });
 
                 return user;
             }
