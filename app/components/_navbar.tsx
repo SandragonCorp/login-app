@@ -10,6 +10,10 @@ import { signIn, useSession } from "next-auth/react"
 export function Navbar() {
     const {data: session, status} = useSession();
 
+    if (status === 'loading') {
+        return <></>;
+    }
+    // @ todo close navbar usermenu on change page
     return (
         <>
             <nav className={`w-full fixed top-0 left-0 right-0 z-10 text-slate-800 text-lg ${style.navbar}`}>
@@ -38,7 +42,7 @@ export function Navbar() {
                                         <a className='p-2 bg-sky-400 text-white hover:bg-sky-300 rounded' onClick={() => {signIn()}}>Sign In</a>
                                     </li>
                                     <li className="m-4 text-center">
-                                        <Link href="/contactus" className='p-2 bg-slate-300	hover:bg-slate-200 text-slate-600 rounded'>Sign Up</Link>
+                                        <Link href="/user/register" className='p-2 bg-slate-300	hover:bg-slate-200 text-slate-600 rounded'>Sign Up</Link>
                                     </li>
                                     </>
                                 )

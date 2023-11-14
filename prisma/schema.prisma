@@ -14,8 +14,8 @@ model Users {
   email                String?   @unique(map: "email_UNIQUE") @db.VarChar(45)
   firstname            String?   @db.VarChar(45)
   lastname             String?   @db.VarChar(45)
-  enabled              Int?      @db.TinyInt @default(0)
-  roles                String?   @db.VarChar(255)
+  enabled              Int?      @default(0) @db.TinyInt
+  role                 String?   @db.VarChar(255)
   createddatetime      DateTime? @default(now()) @db.DateTime(0)
   lastloggedindatetime DateTime? @default(now()) @db.DateTime(0)
 }

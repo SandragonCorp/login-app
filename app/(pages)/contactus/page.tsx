@@ -2,13 +2,17 @@
 
 import { AJAX } from '@/app/(utils)/_http';
 import style from './contactus.module.css'
-import { initInteractionObserver } from "@/app/scripts/interaction_observer";
+import { destroyInteractionObserver, initInteractionObserver } from "@/app/scripts/interaction_observer";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast';
 
 export default function Page() {
     useEffect(() => {
         initInteractionObserver();
+
+        return () => {
+            destroyInteractionObserver();
+        };
     }, []);
 
     // storage of each input values to be passed to the request

@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         VALIDATOR.validate(registerForm.firstName, { label: 'First Name', formName: 'firstname' }, { notEmpty: true, minLength: 1, format: VALIDATOR_FORMAT.ALPHABETS_ONLY});
         VALIDATOR.validate(registerForm.lastName, { label: 'Last Name', formName: 'lastname' }, { notEmpty: true, minLength: 1, format: VALIDATOR_FORMAT.ALPHABETS_ONLY});
         VALIDATOR.validate(registerForm.email, { label: 'Email Address', formName: 'email' }, { format: VALIDATOR_FORMAT.EMAIL});
-        VALIDATOR.validate(registerForm.username, { label: 'Username', formName: 'username' }, { notEmpty: true, minLength: 6, format: VALIDATOR_FORMAT.USERNAME});
+        VALIDATOR.validate(registerForm.username, { label: 'Username', formName: 'username' }, { notEmpty: true, minLength: 4, format: VALIDATOR_FORMAT.USERNAME});
         VALIDATOR.validate(registerForm.password, { label: 'Password', formName: 'password' }, { format: VALIDATOR_FORMAT.PASSWORD});
         VALIDATOR.validateUsingCustomFunction(registerForm.confirmPassword, { label: 'Confirm Password', formName: 'confirm_password' }, (value: string, inputInfo: InputInfo): void => {
             const errorMessage = 'Passwords did not match.'
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
                 email: registerForm.email,
                 firstname: registerForm.firstName,
                 lastname: registerForm.lastName,
-                roles: ROLES.SIMPLE_USER.toString()
+                role: ROLES.ROLE_USER.toString()
             }
         });
 
