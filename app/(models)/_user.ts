@@ -1,16 +1,16 @@
-interface User {
+export interface User {
     id: number
     username: string
-    password: string
     email: string
     firstname: string
     lastname: string
     enabled: string
-    roles: string
+    role: string
     createddatetime: string
     lastloggedindatetime: string
 }
 
 export enum ROLES {
-    SIMPLE_USER = "SIMPLE_USER"
+    ROLE_USER = "ROLE_USER",
+    ROLE_ADMIN = "ROLE_ADMIN"
 }

@@ -9,20 +9,24 @@ import { useSearchParams, redirect  } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
 import { STATUS_CODES, forceRedirectTo } from "@/app/(utils)/_http";
 import { NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast';
-import { initInteractionObserver } from '@/app/scripts/interaction_observer';
+import { destroyInteractionObserver, initInteractionObserver } from '@/app/scripts/interaction_observer';
 
 export default function Login() {
     // for some reason, this is called everytime. I don't know why. maybe is and side-effect thing or next auth thing? (Note that this page is a custom login page of next auth)
 
+    const { data: session, status } = useSession();
     useEffect(() => {
         initInteractionObserver();
-    }, []);
+
+        return () => {
+            destroyInteractionObserver();
+        };
+    }, [session]);
 
     // disabling the form while loading
     const [isDisabledForm, setDisabledForm] = useState(false);
-    const [loginForm, setLoginForm] = useState<LoginForm>({username: '', password: ''});
+    const [loginForm, setLoginForm] = useState<LoginForm>({username: 'admin', password: 'Lfucio123!!'});
     const searchParams = useSearchParams();
-    const { data: session, status } = useSession();
 
     let search = searchParams.get('callbackUrl');
 

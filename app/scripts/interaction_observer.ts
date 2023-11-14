@@ -1,10 +1,11 @@
 /**
  * How to use this?
  * - add .observable class to the element you want to be animated
- * - 
+ * - add also the effect class (observable-animate-...)
  */
+let observer: IntersectionObserver;
 export const initInteractionObserver = () => {
-    let observer = new IntersectionObserver((entries, obs) => {
+    observer = new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) { // entry is visible in the viewport
                 // remove observable animation classes so they animate "in"
@@ -33,3 +34,8 @@ export const initInteractionObserver = () => {
         observer.observe(observableElement);
     });
 }
+
+// @todo create a function that removes initInteractionObserver
+export const destroyInteractionObserver = () => {
+    observer.disconnect();
+};

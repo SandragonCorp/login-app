@@ -32,6 +32,8 @@ interface Props {
 }
 
 export default function RootLayout({ children }: Props) {
+
+  // @todo change classes esp. sizes because they are mobile-first styles 
   return (
     <html lang="en" className='w-full min-h-full font-mono'>
       <body className={`w-full min-h-full _navbar bg-slate-100 text-slate-800 ${inter.className}`}>

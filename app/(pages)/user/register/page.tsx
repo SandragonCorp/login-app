@@ -15,11 +15,15 @@ import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons/faCircleInfo'
 import { sleep } from '@/app/(utils)/_delay'
 import Tooltip, { TOOLTIP_POSITION, TooltipTrigger, TooltipWrapper } from '@/app/components/tooltip'
-import { initInteractionObserver } from '@/app/scripts/interaction_observer'
+import { destroyInteractionObserver, initInteractionObserver } from '@/app/scripts/interaction_observer'
 
 export default function Register() {
     useEffect(() => {
         initInteractionObserver();
+
+        return () => {
+            destroyInteractionObserver();
+        };
     }, []);
 
     // storage of each input values to be passed to the request
@@ -107,7 +111,6 @@ export default function Register() {
     const [isShowPasswordTooltip, setIsShowPasswordTooltip] = useState(false);
 
     return (
-        // @todo show valid password in a hint
         <>
             <div className="page_wrapper">
                 <form className={`p-8 rounded-md mx-auto text-center max-w-lg bg-white border-2 border-neutral-400 observable observable-animate-opacity ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onRegister}>

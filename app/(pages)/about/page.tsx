@@ -5,12 +5,16 @@ import style from "./about.module.css";
 import { DeveloperCard } from "@/app/components/_developer_card";
 import { ServicesCard } from "@/app/components/_services_card";
 import { ExpectFromUs } from "@/app/components/_expect_from_us_card";
-import { initInteractionObserver } from "@/app/scripts/interaction_observer";
+import { destroyInteractionObserver, initInteractionObserver } from "@/app/scripts/interaction_observer";
 import { useEffect } from 'react'
 
 export default function Page() {
     useEffect(() => {
         initInteractionObserver();
+
+        return () => {
+            destroyInteractionObserver();
+        };
     }, []);
 
     return (

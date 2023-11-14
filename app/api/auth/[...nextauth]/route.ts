@@ -1,14 +1,17 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from '@prisma/client';
 import bcryptjs from "bcryptjs";
-import { DateTime } from "@/app/(utils)/_datetime";
+import { DateTime } from "@/app/(models)/_datetime";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "@/app/lib/prisma";
+import { User } from "@/app/(models)/_user";
 
 export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt'
     },
+    adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             type: "credentials",
@@ -18,10 +21,8 @@ export const authOptions = {
                 password: { }
             },
             async authorize(credentials) : Promise<any> {
-                const prisma = new PrismaClient();
-
                 // check if user exists
-                const user = await prisma.users.findFirstOrThrow({
+                let user = await prisma.users.findFirstOrThrow({
                     where: {
                         OR: [
                             { username: credentials?.username }
@@ -35,7 +36,7 @@ export const authOptions = {
                     return null;
                 }
 
-                await prisma.users.update({
+                user = await prisma.users.update({
                     where: { id: user.id },
                     data: { lastloggedindatetime: (new DateTime()).toISOString() }
                 });
@@ -48,15 +49,29 @@ export const authOptions = {
         signIn: '/user/login'
     },
     callbacks: {
-        async jwt({ token, user, session}) {
-            return token;
+        async jwt({ token, user, session}: any): Promise<any> {
+
+            return {...token, ...user};
         },
-        async session({ session, token, user}) {
+        async session({ session, token, user}: any): Promise<any> {
+            // build user object
+            session.user = {
+                id: token.id,
+                username: token.username,
+                email: token.email,
+                firstname: token.firstname,
+                lastname: token.lastname,
+                enabled: token.enabled,
+                role: token.role,
+                createddatetime: token.createddatetime,
+                lastloggedindatetime: token.lastloggedindatetime
+            } as User;
+
             return session;
         }
     }
 }
 
-export const handler = NextAuth(authOptions);
+export const handler = NextAuth(authOptions as AuthOptions);
 
 export {handler as GET, handler as POST}
