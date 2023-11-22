@@ -29,7 +29,7 @@ export function Navbar() {
                                 <Link href="/about" className='hover:text-slate-400'>About</Link>
                             </li>
                             <li className="m-4 text-center">
-                                <Link href="/contactus" className='hover:text-slate-400'>Contact</Link>
+                                <Link href="/contactus" className='hover:text-slate-400'>Contact Us</Link>
                             </li>
                             {
                                 session ? (

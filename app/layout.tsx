@@ -20,6 +20,7 @@ import { Navbar } from './components/_navbar'
 import NextAuthSessionProvider from './api/auth/[...nextauth]/_session_provider'
 import { AppContext } from './(contexts)/app_context'
 import { ToastMainContainer } from './components/toasts/_toast_main_container'
+import { Footer } from './components/_footer';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,8 +36,8 @@ export default function RootLayout({ children }: Props) {
 
   // @todo change classes esp. sizes because they are mobile-first styles 
   return (
-    <html lang="en" className='w-full min-h-full font-mono'>
-      <body className={`w-full min-h-full _navbar bg-slate-100 text-slate-800 ${inter.className}`}>
+    <html lang="en" className='w-full h-full font-mono'>
+      <body className={`w-full h-full _navbar bg-slate-100 text-slate-800 ${inter.className}`}>
         <NextAuthSessionProvider>
           <AppContext>
             {/* TOASTS */}
@@ -47,6 +48,8 @@ export default function RootLayout({ children }: Props) {
 
             {/* CHILDREN */}
             { children }
+
+            <Footer />
           </AppContext>
         </NextAuthSessionProvider>
       </body>
