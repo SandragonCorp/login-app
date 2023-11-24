@@ -38,12 +38,12 @@ export function Navbar() {
                                     </li>
                                 ) : (
                                     <>
-                                    <li className="m-4 text-center">
-                                        <a className='p-2 bg-sky-400 text-white hover:bg-sky-300 rounded' onClick={() => {signIn()}}>Sign In</a>
-                                    </li>
-                                    <li className="m-4 text-center">
-                                        <Link href="/user/register" className='p-2 bg-slate-300	hover:bg-slate-200 text-slate-600 rounded'>Sign Up</Link>
-                                    </li>
+                                        <li className="m-4 text-center">
+                                            <a className='p-2 bg-sky-400 text-white hover:bg-sky-300 rounded' onClick={() => {signIn()}}>Sign In</a>
+                                        </li>
+                                        <li className="m-4 text-center">
+                                            <Link href="/user/register" className='p-2 bg-slate-300	hover:bg-slate-200 text-slate-600 rounded'>Sign Up</Link>
+                                        </li>
                                     </>
                                 )
                             }

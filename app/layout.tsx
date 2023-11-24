@@ -20,6 +20,7 @@ import { Navbar } from './components/_navbar'
 import NextAuthSessionProvider from './api/auth/[...nextauth]/_session_provider'
 import { AppContext } from './(contexts)/app_context'
 import { ToastMainContainer } from './components/toasts/_toast_main_container'
+import { ModalMainContainer } from './components/modals/_modal_main_container';
 import { Footer } from './components/_footer';
 
 const inter = Inter({ subsets: ['latin'] })
