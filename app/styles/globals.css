@@ -144,14 +144,3 @@ form.disabled::after {
     transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
     filter: blur(4px);
 }
-
-/**
-* Modal
-.modal {
-    opacity: 0;
-}
-
-.modal.active {
-    opacity: 1;
-}
-*/
