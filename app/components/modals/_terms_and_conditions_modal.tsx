@@ -1,6 +1,5 @@
 import style from '@/app/components/modals/_terms_and_conditions_modal.module.css'
 import { Modal } from './_modal'
-import { useState } from 'react';
 
 interface TermsAndConditionsModalProps {
     id: string

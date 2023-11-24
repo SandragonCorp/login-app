@@ -6,14 +6,9 @@ import { faFacebook, faTwitter, faYoutube, faInstagram } from '@fortawesome/free
 import Link from 'next/link';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 import { TermsAndConditionsModal } from './modals/_terms_and_conditions_modal';
-import { useState } from 'react';
 import { openModal } from './modals/_modal';
 
 export function Footer() {
-    const [isShowModal, setIsShowModal] = useState(false);
-
-
-
     return (
         <>
             <nav className={`w-full py-10 bg-indigo-600 top-0 left-0 right-0 z-10 text-white text-sm`}>
