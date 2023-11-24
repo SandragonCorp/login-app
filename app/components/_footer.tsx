@@ -5,6 +5,8 @@ import style from './_footer.module.css';
 import { faFacebook, faTwitter, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Link from 'next/link';
 import { faCopyright } from '@fortawesome/free-solid-svg-icons';
+import { TermsAndConditionsModal } from './modals/_terms_and_conditions_modal';
+import { openModal } from './modals/_modal';
 
 export function Footer() {
     return (
@@ -19,7 +21,7 @@ export function Footer() {
                                 <a href="#" className='mx-1'><FontAwesomeIcon icon={faYoutube} size="lg" /></a>
                                 <a href="#" className='mx-1'><FontAwesomeIcon icon={faInstagram} size="lg" /></a>
                             </div>
-                            <div><span className='cursor-pointer'>Terms and Conditions</span></div>
+                            <div><span className='cursor-pointer' onClick={() => openModal("termsAndConditionsModal")}>Terms and Conditions</span></div>
                             <div><span>LoginApp 1.0.0</span></div>
                             <div className='text-sm italic'><FontAwesomeIcon icon={faCopyright} /> Copyright Kamikami 2023</div>
                         </div>
@@ -36,6 +38,7 @@ export function Footer() {
                         </div>
                     </div>
                 </div>
+                <TermsAndConditionsModal id="termsAndConditionsModal" />
             </nav>
         </>
     )
