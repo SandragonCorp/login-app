@@ -15,6 +15,6 @@ export const ServicesCard = (config: ServicesCardProps) => {
       <div className="pt-5">
           { config.children }
       </div>
-  </div>
+    </div>
   )
 }

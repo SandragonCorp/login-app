@@ -19,7 +19,7 @@ export default function Page() {
 
     return (
         <>
-            <FullContainer bgImageSrc='/images/sunset.jpg' className="text-center">
+            <FullContainer className="text-center pt-16" style={{backgroundImage: `url(/images/sunset.jpg)`}}>
                 <div className={`page-title-xl pt-24 pb-8 observable observable-animate-opacity`}>Kamikami</div>
                 <div className={`observable observable-animate-opacity observable-animate-translateFromBottom`}>
                     <div className="page-title-brief-description">" Where the beat go? "</div>
@@ -28,7 +28,7 @@ export default function Page() {
                     <div className="page-title-brief-description">" Drums came in, you ain't see that comin' "</div>
                 </div>
             </FullContainer>
-            <FullContainer className="text-center bg-blue-100">
+            <FullContainer className="text-center bg-blue-100 pt-16">
                 <div className={`page-title-lg pt-10 pb-8 observable observable-animate-opacity observable-animate-translateFromBottom`}>Our Services</div>
                 <div className={`flex justify-center left-0 right-0 mx-auto max-w-screen-lg`}>
                     <ServicesCard className='observable observable-animate-opacity observable-animate-translateFromLeft' title="Software Development">
@@ -63,8 +63,8 @@ export default function Page() {
                     </ServicesCard>
                 </div>
             </FullContainer>
-            <FullContainer className="bg-red-100">
-                <div className={`text-5xl mt-24 mb-24 text-center observable observable-animate-opacity observable-animate-translateFromBottom`}>What can you expect from us?</div>
+            <FullContainer className="bg-red-100 pt-16">
+                <div className={`text-5xl pt-24 mb-24 text-center observable observable-animate-opacity observable-animate-translateFromBottom`}>What can you expect from us?</div>
                 <div className={`left-0 right-0 mx-auto max-w-screen-lg`}>
                     <ExpectFromUs className='observable observable-animate-opacity observable-animate-translateFromBottom' title="Customer Satisfaction">
                         Magdamag naggigitara, ang bagal ng gabi
@@ -94,11 +94,11 @@ export default function Page() {
                     </ExpectFromUs>
                 </div>
             </FullContainer>
-            <FullContainer className="text-center bg-slate-100 pb-40">
+            <FullContainer className="text-center bg-slate-100 pb-40 pt-16">
                 <div className={`page-title-lg pt-10 pb-8 observable observable-animate-opacity observable-animate-translateFromBottom`}>Who Are We?</div>
                 <div className={`flex justify-around left-0 right-0 mx-auto ${ style.developersWrapper }`}>
                     <DeveloperCard className='observable observable-animate-opacity observable-animate-translateFromLeft' image="/images/lean.png" name="Lean Viktor A. Fucio" position="Software Developer" quote="Kung sa sakin ka nag umpisa, 'di sana wala nang iba" />
-                    <DeveloperCard className='observable observable-animate-opacity observable-animate-translateFromBottom' image="/images/sandro.png" name="Sandro P. Mendoza" position="Software Developer" quote="Ibibigay ko ang chicken skin ko para sa'yo" />
+                    <DeveloperCard className='observable observable-animate-opacity observable-animate-translateFromBottom' image="/images/sandro.png" name="Sandro P. Mendoza" position="Software Developer" quote="Simply Suck then Swallow" />
                     <DeveloperCard className='observable observable-animate-opacity observable-animate-translateFromRight' image="/images/ken.png" name="Ken M. Moreno" position="Software Developer" quote="Kung mahal mo, ipuputok mo sa loob" />
                 </div>
             </FullContainer>
