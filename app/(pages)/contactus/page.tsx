@@ -5,6 +5,7 @@ import style from './contactus.module.css'
 import { destroyInteractionObserver, initInteractionObserver } from "@/app/scripts/interaction_observer";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { NewToastProps, TOAST_POSITION, TOAST_STYLES, ToastProps, addToast, clearToastsByGroup } from '@/app/components/toasts/_toast';
+import { FullContainer } from '@/app/components/_full_container';
 
 export default function Page() {
     useEffect(() => {
@@ -79,49 +80,51 @@ export default function Page() {
 
     return (
         <>
-            <div className="page_wrapper">
-                <form className={`p-8 rounded-md mx-auto text-center max-w-lg bg-white border-2 border-neutral-400 observable observable-animate-opacity ${style.form} ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onSendEmail}>
-                    <div className={`text-5xl pt-8 pb-8`}>Contact Us</div>
-                    <label className='text-left'>
-                        Full name:
-                        <input
-                            type='text'
-                            name='fullname'
-                            className={`rounded-sm ${inputStyles.fullname}`}
-                            placeholder='Full name'
+            <FullContainer>
+                <div className="page_wrapper">
+                    <form className={`p-8 rounded-md mx-auto text-center max-w-lg bg-white border-2 border-neutral-400 observable observable-animate-opacity ${style.form} ${isDisabledForm ? 'disabled' : ''}`} onSubmit={onSendEmail}>
+                        <div className={`text-5xl pt-8 pb-8`}>Contact Us</div>
+                        <label className='text-left'>
+                            Full name:
+                            <input
+                                type='text'
+                                name='fullname'
+                                className={`rounded-sm ${inputStyles.fullname}`}
+                                placeholder='Full name'
+                                required
+                                onChange={(e: SyntheticEvent) => setContactForm({...contactForm, fullName: (e.target as HTMLInputElement).value})}
+                                value={contactForm.fullName}
+                            />
+                        </label>
+                        <label className='text-left'>
+                            Email address:
+                            <input
+                                type='email'
+                                name='email'
+                                className={`rounded-sm ${inputStyles.email}`}
+                                placeholder='Email address'
+                                required
+                                onChange={(e: SyntheticEvent) => setContactForm({...contactForm, email: (e.target as HTMLInputElement).value})}
+                                value={contactForm.email}
+                            />
+                        </label>
+                        <div className='text-left'>
+                            Message:
+                        </div>
+                        <textarea
+                            name='message'
+                            className={`w-full rounded-sm ${inputStyles.message}`}
+                            placeholder='Enter message at least 10 characters...'
                             required
-                            onChange={(e: SyntheticEvent) => setContactForm({...contactForm, fullName: (e.target as HTMLInputElement).value})}
-                            value={contactForm.fullName}
+                            onChange={(e: SyntheticEvent) => setContactForm({...contactForm, message: (e.target as HTMLInputElement).value})}
+                            value={contactForm.message}
                         />
-                    </label>
-                    <label className='text-left'>
-                        Email address:
-                        <input
-                            type='email'
-                            name='email'
-                            className={`rounded-sm ${inputStyles.email}`}
-                            placeholder='Email address'
-                            required
-                            onChange={(e: SyntheticEvent) => setContactForm({...contactForm, email: (e.target as HTMLInputElement).value})}
-                            value={contactForm.email}
-                        />
-                    </label>
-                    <div className='text-left'>
-                        Message:
-                    </div>
-                    <textarea
-                        name='message'
-                        className={`w-full rounded-sm ${inputStyles.message}`}
-                        placeholder='Enter message at least 10 characters...'
-                        required
-                        onChange={(e: SyntheticEvent) => setContactForm({...contactForm, message: (e.target as HTMLInputElement).value})}
-                        value={contactForm.message}
-                    />
-                    <input type='submit' className='mx-auto mb-16 bg-blue-500 hover:bg-blue-400 text-white font-bold' value='Submit' />
+                        <input type='submit' className='mx-auto mb-16 bg-blue-500 hover:bg-blue-400 text-white font-bold' value='Submit' />
 
-                    You can also text or call us at <span className='italic font-bold'>09XX-XXX-XXXX</span>.
-                </form>
-            </div>
+                        You can also text or call us at <span className='italic font-bold'>09XX-XXX-XXXX</span>.
+                    </form>
+                </div>
+            </FullContainer>
         </>
     )
 }
