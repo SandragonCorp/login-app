@@ -6,10 +6,24 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'duration-500',
+    'duration-1000',
+    'duration-2000',
+    '!duration-0',
+    'transition-left',
+    'left-full',
+    '-left-full',
+    '!opacity-100',
+    '!z-10'
+  ],
   theme: {
     extend: {
       transitionDuration: {
         '2000': '2000ms' 
+      },
+      transitionProperty: {
+        'left': 'left'
       }
     },
   },

@@ -49,12 +49,13 @@ body {
     margin-right: auto;
 }
 
-.hidden {
-    display: none;
-}
-
 .translate-x-N50Percent {
     --tw-translate-x: -50%;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.translate-y-N50Percent {
+    --tw-translate-y: -50%;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -143,4 +144,59 @@ form.disabled::after {
 .observable.observable-animate-blur {
     transition-duration: 0s; /* Makes the animation when not visible in the viewport instantly */
     filter: blur(4px);
+}
+
+/**
+* Carousel
+*/
+.carousel-slide-container {
+    transition-timing-function: ease-in-out;
+}
+
+.carousel.fade .carousel-item {
+    display: none;
+    opacity: 0;
+}
+
+.carousel .carousel-item {
+    left: 0px;
+    z-index: 1;
+}
+
+.carousel .carousel-item.active {
+    display: block;
+    opacity: 1;
+}
+
+.carousel .carousel-item.moving {
+    display: block;
+}
+
+.carousel .carousel-item-to-left {
+    left: -100%;
+}
+
+.carousel .carousel-item-to-right {
+    left: 100%;
+}
+
+.carousel .left-button,
+.carousel .right-button {
+    z-index: 99;
+}
+
+.carousel .carousel-indicators {
+    z-index: 99;
+}
+
+.carousel .carousel-indicator {
+    margin-right: 0.5rem;
+}
+
+.carousel .carousel-indicator:last-child {
+    margin-right: 0rem;
+}
+
+.carousel .carousel-indicator.active {
+    background-color: rgb(71 85 105);
 }

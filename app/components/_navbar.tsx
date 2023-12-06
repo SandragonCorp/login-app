@@ -16,7 +16,7 @@ export function Navbar() {
     // @ todo close navbar usermenu on change page
     return (
         <>
-            <nav className={`w-full fixed top-0 left-0 right-0 z-10 text-slate-800 text-lg ${style.navbar}`}>
+            <nav className={`w-full fixed top-0 left-0 right-0 z-10 text-slate-800 text-lg z-50 ${style.navbar}`}>
                 <div className="place-content-between px-4 mx-auto md:items-center md:flex md:px-8">
                     <div>
                         <Link href="/">
