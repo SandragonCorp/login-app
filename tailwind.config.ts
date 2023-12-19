@@ -12,9 +12,12 @@ const config: Config = {
     'duration-2000',
     '!duration-0',
     'transition-left',
-    'left-full',
-    '-left-full',
+    '!left-full',
+    '!-left-full',
+    '!right-full',
+    '!-right-full',
     '!opacity-100',
+    '!opacity-0',
     '!z-10'
   ],
   theme: {

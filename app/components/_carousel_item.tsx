@@ -12,7 +12,7 @@ export interface CarouselItemProps {
 
 export const CarouselItem = (config: CarouselItemProps) => {
   return (
-    <div className={`carousel-item w-full h-full bg-red-900 absolute top-0 transition-opacity duration-${config.animationDuration} ${config.className ?? ''}`} style={config.style} data-index={config.index}>
+    <div className={`carousel-item w-full h-full bg-red-900 absolute top-0 transition-none duration-${config.animationDuration} ${config.className ?? ''}`} style={config.style} data-index={config.index}>
       {config.children}
     </div>
   )
