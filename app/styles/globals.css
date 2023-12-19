@@ -163,14 +163,12 @@ form.disabled::after {
 
 .carousel .carousel-item {
     display: none;
-}
-
-.carousel .carousel-item {
     left: 0px;
     z-index: 1;
 }
 
-.carousel .carousel-item.active {
+.carousel .carousel-item.active,
+.carousel .carousel-item.next-active {
     display: block;
     opacity: 1;
 }

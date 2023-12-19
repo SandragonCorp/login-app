@@ -13,8 +13,8 @@ export default function Home() {
 	<>
 		<FullContainer>
 			<div className="w-full h-screen">
-				<Carousel effect={CAROUSEL_EFFECTS.SLIDE} animationDuration={CAROUSEL_DURATION.HALF_SECOND} isLoop={true}>
-					<CarouselItem>
+				<Carousel effect={CAROUSEL_EFFECTS.FADE} animationDuration={CAROUSEL_DURATION.HALF_SECOND} isLoop={true}>
+					<CarouselItem className="active">
 						<div className="w-full h-full pt-32 text-center text-white bg-center bg-no-repeat bg-cover" style={{backgroundImage: `url(/images/home-carousel/1.jpg)`}}>
 							<div className="text-9xl"><span className="bg-yellow-400/[.3]">1 Attack On Titan</span></div>
 						</div>
@@ -29,7 +29,7 @@ export default function Home() {
 							<div className="text-9xl"><span className="bg-yellow-400/[.3]">3 Fate/Stay Night: Unlimited Blade Works</span></div>
 						</div>
 					</CarouselItem>
-					<CarouselItem className="active">
+					<CarouselItem>
 						<div className="w-full h-full pt-32 text-center text-white bg-center bg-no-repeat bg-cover" style={{backgroundImage: `url(/images/home-carousel/4.jpg)`}}>
 							<div className="text-9xl"><span className="bg-yellow-400/[.3]">4 Full Metal Alchemist: Brotherhood</span></div>
 						</div>

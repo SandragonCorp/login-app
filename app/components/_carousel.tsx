@@ -73,11 +73,7 @@ export const Carousel = (config: CarouselProps) => {
             animationDuration: config.animationDuration
         };
 
-        if (config.effect === CAROUSEL_EFFECTS.SLIDE) {
-            // props.style = {
-            //     left: index * 100 + "%"
-            // };
-        } else if (config.effect === CAROUSEL_EFFECTS.FADE) {
+        if (config.effect === CAROUSEL_EFFECTS.FADE) {
             props.style = {
                 left: "0%"
             };
@@ -118,7 +114,7 @@ export const Carousel = (config: CarouselProps) => {
             nextCarouselItemActiveIndex = 0;
         }
 
-        showNextCarouselItem(e, nextCarouselItemActiveIndex);
+        showNextCarouselItem(e, nextCarouselItemActiveIndex, direction as CAROUSEL_DIRECTION);
     };
 
     const onCarouselIndicatorClick = (e: SyntheticEvent, nextCarouselItemActiveIndex: number): void => {
@@ -131,7 +127,7 @@ export const Carousel = (config: CarouselProps) => {
         showNextCarouselItem(e, nextCarouselItemActiveIndex);
     };
 
-    const showNextCarouselItem = (e: SyntheticEvent, nextCarouselItemActiveIndex: number): void => {
+    const showNextCarouselItem = (e: SyntheticEvent, nextCarouselItemActiveIndex: number, direction?: CAROUSEL_DIRECTION): void => {
         const carousel = getCarouselEl(e);
         const carouselItems = carousel?.getElementsByClassName('carousel-item');
         const carouselItemActive = carousel?.getElementsByClassName('carousel-item active')[0];
@@ -145,7 +141,7 @@ export const Carousel = (config: CarouselProps) => {
             carouselItemNextActive.classList.add("next-active");
 
             if (config.effect === CAROUSEL_EFFECTS.SLIDE) {
-                showNewCarouselItemBySlide(carouselItemActive, carouselItemNextActive);
+                showNewCarouselItemBySlide(carouselItemActive, carouselItemNextActive, direction);
             } else if (config.effect === CAROUSEL_EFFECTS.FADE) {
                 showNewCarouselItemByFade(carouselItemActive, carouselItemNextActive);
             }
@@ -174,6 +170,7 @@ export const Carousel = (config: CarouselProps) => {
         oldCarouselItemActive.classList.remove("moving");
         oldCarouselItemActive.classList.remove("active");
         oldCarouselItemActive.classList.remove("!z-10");
+        oldCarouselItemActive.classList.remove("!opacity-0");
         oldCarouselItemActive.classList.remove("!opacity-100");
         oldCarouselItemActive.classList.remove("transition-property-opacity");
         oldCarouselItemActive.classList.remove("transition-property-left");
@@ -183,6 +180,7 @@ export const Carousel = (config: CarouselProps) => {
         newCarouselItemActive.classList.remove("moving");
         newCarouselItemActive.classList.remove("next-active");
         newCarouselItemActive.classList.remove("!z-10");
+        newCarouselItemActive.classList.remove("!opacity-0");
         newCarouselItemActive.classList.remove("!opacity-100");
         newCarouselItemActive.classList.remove("transition-property-opacity");
         newCarouselItemActive.classList.remove("transition-property-left");
@@ -223,12 +221,15 @@ export const Carousel = (config: CarouselProps) => {
     )
 }
 
-const showNewCarouselItemBySlide = (carouselItemActive: Element, carouselItemNextActive: Element): void => {
+const showNewCarouselItemBySlide = (carouselItemActive: Element, carouselItemNextActive: Element, direction?: CAROUSEL_DIRECTION): void => {
     carouselItemActive.classList.add("moving");
     carouselItemNextActive.classList.add("moving");
 
-    // get direction from data-index's
-    const direction = parseInt(carouselItemActive.getAttribute('data-index')!) > parseInt(carouselItemNextActive.getAttribute('data-index')!) ? CAROUSEL_DIRECTION.LEFT : CAROUSEL_DIRECTION.RIGHT;
+    // if direction is not available get it manually based on the carousel item's data-index
+    // this can happen if the carousel indicator is clicked instead of arrows
+    if (!direction) {
+        direction = parseInt(carouselItemActive.getAttribute('data-index')!) > parseInt(carouselItemNextActive.getAttribute('data-index')!) ? CAROUSEL_DIRECTION.LEFT : CAROUSEL_DIRECTION.RIGHT;
+    }
 
     if (direction === CAROUSEL_DIRECTION.RIGHT) {
         carouselItemNextActive.classList.add("!left-full");
@@ -262,7 +263,7 @@ const showNewCarouselItemByFade = (carouselItemActive: Element, carouselItemNext
 
     setTimeout(() => {
         carouselItemNextActive.classList.add("!z-10");
-        carouselItemNextActive.classList.remove("!opacity-100");
+        carouselItemNextActive.classList.add("!opacity-100");
     });
 }
 
